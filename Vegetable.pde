@@ -5,13 +5,20 @@ public class Vegetable {
     
     public Vegetable() {
         this.column = int(random(width / this.SIZE));
-        this.y = this.SIZE / 2;
+        this.y = this.SIZE / - 2;
     }
     
-    public void update(ArrayList<Vegetable> vegetables, ArrayList trash) {
-        if(this.y < height - (this.SIZE * 1.5)) {
-            this.y += 5;
-        } else {
+    public void update(ArrayList<Vegetable> vegetables, ArrayList<Tile> tiles, ArrayList trash) {
+        this.y += 5;
+        
+        if (this.y > height - (this.SIZE * 1.5)) {
+            for (Tile tile : tiles) {
+                if (tile.getColumn() == this.column && !tile.getDestroyed()) {
+                    tile.setDestroy(true);
+                    trash.add(this);
+                }
+            }
+        } else if (this.y > height + (this.SIZE / 2)) {
             trash.add(this);
         }
     }

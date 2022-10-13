@@ -1,10 +1,20 @@
 public class Game {
     private ArrayList<Vegetable> vegetables;
+    private ArrayList<Tile> tiles;
     private ArrayList trash;
+    private final float SIZE = 30;
     
     public Game() {
         this.vegetables = new ArrayList();
+        this.tiles = new ArrayList();
+        setupTiles();
         this.trash = new ArrayList();
+    }
+    
+    public void setupTiles() {
+        for (int i = 0; i < int(width / this.SIZE); i++) {
+            this.tiles.add(new Tile(i));
+        }
     }
     
     public void run() {
@@ -18,7 +28,7 @@ public class Game {
             this.vegetables.add(new Vegetable());
         }
         for (Vegetable vegetable : this.vegetables) {
-            vegetable.update(this.vegetables, this.trash);
+            vegetable.update(this.vegetables, this.tiles, this.trash);
         }
     }
     
@@ -31,6 +41,9 @@ public class Game {
     public void render() {
         for (Vegetable vegetable : this.vegetables) {
             vegetable.render();
+        }
+        for (Tile tile : this.tiles) {
+            tile.render();
         }
     }
 }
