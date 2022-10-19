@@ -1,30 +1,36 @@
 public class Tile {
-    private int column;
-    private boolean destroyed;
-    private final float SIZE = 30;
-
-    public Tile(int column) {
+    public float size;
+    public int column;
+    public float y;
+    public boolean destroyed;
+    public int timer;
+    
+    public Tile(float size, int column, float y) {
+        this.size = size;
         this.column = column;
+        this.y = y;
         this.destroyed = false;
+        this.timer = 0;
     }
 
-    public int getColumn() {
-        return this.column;
+    public void destroy() {
+        this.destroyed = true;
+        this.timer = 120;
     }
 
-    public boolean getDestroyed() {
-        return this.destroyed;
+    public void update() {
+        if (this.timer < 0) {
+            this.destroyed = false;
+        } else {
+            this.timer--;
+        }
     }
-
-    public void setDestroy(boolean state) {
-        this.destroyed = state;
-    }
-
+    
     public void render() {
-        if(!this.destroyed) {
+        if (!this.destroyed) {
             fill(0xFFFFFFFF);
             noStroke();
-            square(map(this.column, 0, int(width / this.SIZE), 0, width), height - this.SIZE, this.SIZE);
+            square(map(this.column, 0, int(width / this.size), 0, width), this.y, this.size);
         }
     }
 }

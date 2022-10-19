@@ -12,8 +12,4 @@ public void draw() {
     background(0);
     
     game.run();
-
-    fill(0xFFFFFFFF);
-    textAlign(LEFT, TOP);
-    text(join(new String[] {str(frameCount), str(frameRate)}, "\n"), 0, 0);
 }

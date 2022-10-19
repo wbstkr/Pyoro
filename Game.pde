@@ -1,8 +1,8 @@
 public class Game {
-    private ArrayList<Vegetable> vegetables;
-    private ArrayList<Tile> tiles;
-    private ArrayList trash;
-    private final float SIZE = 30;
+    public ArrayList<Vegetable> vegetables;
+    public ArrayList<Tile> tiles;
+    public ArrayList trash;
+    public final float SIZE = 30;
     
     public Game() {
         this.vegetables = new ArrayList();
@@ -13,22 +13,30 @@ public class Game {
     
     public void setupTiles() {
         for (int i = 0; i < int(width / this.SIZE); i++) {
-            this.tiles.add(new Tile(i));
+            this.tiles.add(new Tile(this.SIZE, i, int(random(height / this.SIZE - 4, height / this.SIZE - 1)) * this.SIZE));
+            this.tiles.add(new Tile(this.SIZE, i, int(random(height / this.SIZE - 4, height / this.SIZE - 1)) * this.SIZE));
         }
     }
     
     public void run() {
         updateVegetables();
+        updateTiles();
         updateTrash();
         render();
     }
     
     public void updateVegetables() {
-        if (frameCount % 6 == 0) {
-            this.vegetables.add(new Vegetable());
+        if (frameCount % 20 == 0) {
+            this.vegetables.add(new Vegetable(this.SIZE));
         }
         for (Vegetable vegetable : this.vegetables) {
-            vegetable.update(this.vegetables, this.tiles, this.trash);
+            vegetable.update(this.tiles, this.trash);
+        }
+    }
+    
+    public void updateTiles() {
+        for (Tile tile : this.tiles) {
+            tile.update();
         }
     }
     
@@ -36,6 +44,7 @@ public class Game {
         for (Object object : this.trash) {
             if (this.vegetables.contains(object)) this.vegetables.remove(object);
         }
+        this.trash.clear();
     }
     
     public void render() {
