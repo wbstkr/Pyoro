@@ -12,15 +12,13 @@ public class Pyoro extends PApplet {
 
     @Override
     public void setup() {
-        game = new Game(this);
-
         frameRate(60);
+        game = new Game(this);
     }
 
     @Override
     public void draw() {
         background(0);
-
         game.run();
     }
 

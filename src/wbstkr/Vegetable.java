@@ -27,7 +27,8 @@ public class Vegetable {
         } else {
             for (Tile tile : tiles) {
                 if (!tile.isDestroyed() && tile.getColumn() == this.column
-                        && (this.y > tile.getY() - this.radius && this.y < tile.getY() + tile.getSize() + this.radius)) {
+                        && (this.y > tile.getY() - this.radius
+                                && this.y < tile.getY() + tile.getSize() + this.radius)) {
                     tile.destroy();
                     trash.add(this);
                     break;

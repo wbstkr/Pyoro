@@ -30,13 +30,6 @@ public class Game {
         }
     }
 
-    public void run() {
-        updateVegetables();
-        updateTiles();
-        updateTrash();
-        render();
-    }
-
     public void updateVegetables() {
         if (this.parent.frameCount % 20 == 0) {
             this.vegetables.add(new Vegetable(parent, Game.SIZE));
@@ -68,4 +61,12 @@ public class Game {
             tile.render();
         }
     }
+
+    public void run() {
+        updateVegetables();
+        updateTiles();
+        updateTrash();
+        render();
+    }
+
 }
