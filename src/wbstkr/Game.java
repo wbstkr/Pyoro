@@ -34,15 +34,11 @@ public class Game {
         if (this.parent.frameCount % 20 == 0) {
             this.vegetables.add(new Vegetable(parent, Game.SIZE));
         }
-        for (Vegetable vegetable : this.vegetables) {
-            vegetable.update(this.tiles, this.trash);
-        }
+        this.vegetables.forEach(vegetable -> vegetable.update(this.tiles, this.trash));
     }
 
     public void updateTiles() {
-        for (Tile tile : this.tiles) {
-            tile.update();
-        }
+        this.tiles.forEach(Tile::update);
     }
 
     public void updateTrash() {
@@ -54,12 +50,8 @@ public class Game {
     }
 
     public void render() {
-        for (Vegetable vegetable : this.vegetables) {
-            vegetable.render();
-        }
-        for (Tile tile : this.tiles) {
-            tile.render();
-        }
+        this.vegetables.forEach(Vegetable::render);
+        this.tiles.forEach(Tile::render);
     }
 
     public void run() {
