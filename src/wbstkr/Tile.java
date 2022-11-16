@@ -2,20 +2,19 @@ package wbstkr;
 
 import processing.core.PApplet;
 
-public class Tile {
-    private PApplet parent;
-    private int timer;
+public class Tile extends GameObject {
     private float size;
     private int column;
     private float y;
+    private int timer;
     private boolean destroyed;
 
     public Tile(PApplet parent, float size, int column, float y) {
-        this.parent = parent;
-        this.timer = 0;
+        super(parent);
         this.size = size;
         this.column = column;
         this.y = y;
+        this.timer = 0;
         this.destroyed = false;
     }
 
@@ -40,6 +39,7 @@ public class Tile {
         this.timer = 120;
     }
 
+    @Override
     public void update() {
         if (this.timer < 0) {
             this.destroyed = false;
@@ -48,6 +48,7 @@ public class Tile {
         }
     }
 
+    @Override
     public void render() {
         if (!this.destroyed) {
             this.parent.fill(0xFFFFFFFF);

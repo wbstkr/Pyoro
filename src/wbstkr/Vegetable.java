@@ -4,22 +4,21 @@ import java.util.List;
 
 import processing.core.PApplet;
 
-public class Vegetable {
-    private PApplet parent;
+public class Vegetable extends GameObject {
     private float size;
     private float radius;
     private int column;
     private float y;
 
     public Vegetable(PApplet parent, float size) {
-        this.parent = parent;
+        super(parent);
         this.size = size;
         this.radius = this.size / 2;
         this.column = (int) (this.parent.random(this.parent.width / this.size));
         this.y = this.radius * -1;
     }
 
-    public void update(List<Tile> tiles, List<Object> trash) {
+    public void update(List<Tile> tiles, List<GameObject> trash) {
         this.y += 5;
 
         if (this.y > this.parent.height + this.radius) {
@@ -37,6 +36,7 @@ public class Vegetable {
         }
     }
 
+    @Override
     public void render() {
         this.parent.fill(0xFFFFFFFF);
         this.parent.noStroke();

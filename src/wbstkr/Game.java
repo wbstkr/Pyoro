@@ -6,39 +6,30 @@ import processing.core.PApplet;
 
 public class Game {
     private PApplet parent;
+    private ArrayList<GameObject> trash;
     private ArrayList<Vegetable> vegetables;
     private ArrayList<Tile> tiles;
-    private ArrayList<Object> trash;
     private static final float SIZE = 30;
 
     public Game(PApplet parent) {
         this.parent = parent;
+        this.trash = new ArrayList<>();
         this.vegetables = new ArrayList<>();
         this.tiles = new ArrayList<>();
-        setupTiles();
-        this.trash = new ArrayList<>();
+        for (int i = 0; i < (int) (this.parent.width / Game.SIZE); i++) {
+            this.tiles.add(new Tile(parent, Game.SIZE, i, this.parent.height - Game.SIZE));
+        }
     }
 
-    public void setupTiles() {
-        for (int i = 0; i < (int) (this.parent.width / Game.SIZE); i++) {
-            this.tiles.add(new Tile(parent, Game.SIZE, i,
-                    (int) (this.parent.random(this.parent.height / Game.SIZE - 4, this.parent.height / Game.SIZE - 1))
-                            * Game.SIZE));
-            this.tiles.add(new Tile(parent, Game.SIZE, i,
-                    (int) (this.parent.random(this.parent.height / Game.SIZE - 4, this.parent.height / Game.SIZE - 1))
-                            * Game.SIZE));
-        }
+    private int difficultyCalculator(int frame) { // TODO: print out value to test if this is accurate
+        return (int) (Math.pow(5, (frame / -100) + 3) + 20);
     }
 
     public void updateVegetables() {
-        if (this.parent.frameCount % 20 == 0) {
+        if (this.parent.frameCount % difficultyCalculator(this.parent.frameCount / 60) == 0) {
             this.vegetables.add(new Vegetable(parent, Game.SIZE));
         }
         this.vegetables.forEach(vegetable -> vegetable.update(this.tiles, this.trash));
-    }
-
-    public void updateTiles() {
-        this.tiles.forEach(Tile::update);
     }
 
     public void updateTrash() {
@@ -56,7 +47,7 @@ public class Game {
 
     public void run() {
         updateVegetables();
-        updateTiles();
+        this.tiles.forEach(Tile::update);
         updateTrash();
         render();
     }
