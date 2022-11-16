@@ -1,7 +1,6 @@
 package wbstkr;
 
 import java.util.ArrayList;
-
 import processing.core.PApplet;
 
 public class Game {
@@ -21,8 +20,8 @@ public class Game {
         }
     }
 
-    private int difficultyCalculator(int frame) { // TODO: print out value to test if this is accurate
-        return (int) (Math.pow(5, (frame / -100) + 3) + 20);
+    private int difficultyCalculator(int frame) {
+        return (int) (Math.pow(5d, (frame / -100d) + 3d) + 20d);
     }
 
     public void updateVegetables() {
