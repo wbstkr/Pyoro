@@ -24,31 +24,34 @@ public class Game {
         return (int) (Math.pow(5d, (frame / -100d) + 3d) + 20d);
     }
 
-    public void updateVegetables() {
+    private void updateVegetables() {
         if (this.parent.frameCount % difficultyCalculator(this.parent.frameCount / 60) == 0) {
             this.vegetables.add(new Vegetable(parent, Game.SIZE));
         }
         this.vegetables.forEach(vegetable -> vegetable.update(this.tiles, this.trash));
     }
 
-    public void updateTrash() {
-        for (Object object : this.trash) {
+    private void updateTiles() {
+        this.tiles.forEach(Tile::update);
+    }
+
+    private void updateTrash() {
+        this.trash.forEach(object -> {
             if (this.vegetables.contains(object))
                 this.vegetables.remove(object);
-        }
+        });
         this.trash.clear();
     }
 
-    public void render() {
+    private void render() {
         this.vegetables.forEach(Vegetable::render);
         this.tiles.forEach(Tile::render);
     }
 
     public void run() {
         updateVegetables();
-        this.tiles.forEach(Tile::update);
+        updateTiles();
         updateTrash();
         render();
     }
-
 }

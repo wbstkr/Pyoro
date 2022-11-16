@@ -1,7 +1,9 @@
 package wbstkr;
 
-public class Player {
-    public Player() {
-        // empty atm
+import processing.core.PApplet;
+
+public class Player extends GameObject {
+    public Player(PApplet parent) {
+        super(parent);
     }
 }
