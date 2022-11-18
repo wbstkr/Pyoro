@@ -1,58 +1,50 @@
 public class Game {
-    public ArrayList<Vegetable> vegetables;
-    public ArrayList<Tile> tiles;
-    public ArrayList trash;
-    public final float SIZE = 30;
-    
+    private ArrayList<GameObject> trash;
+    private ArrayList<Vegetable> vegetables;
+    private ArrayList<Tile> tiles;
+    private static final float SIZE = 30;
+
     public Game() {
-        this.vegetables = new ArrayList();
-        this.tiles = new ArrayList();
-        setupTiles();
-        this.trash = new ArrayList();
-    }
-    
-    public void setupTiles() {
-        for (int i = 0; i < int(width / this.SIZE); i++) {
-            this.tiles.add(new Tile(this.SIZE, i, int(random(height / this.SIZE - 4, height / this.SIZE - 1)) * this.SIZE));
-            this.tiles.add(new Tile(this.SIZE, i, int(random(height / this.SIZE - 4, height / this.SIZE - 1)) * this.SIZE));
+        this.trash = new ArrayList<>();
+        this.vegetables = new ArrayList<>();
+        this.tiles = new ArrayList<>();
+        for (int i = 0; i < (int) (width / Game.SIZE); i++) {
+            this.tiles.add(new Tile(Game.SIZE, i, height - Game.SIZE));
         }
     }
-    
+
+    private int difficultyCalculator(int frame) {
+        return (int) (Math.pow(5d, (frame / -100d) + 3d) + 20d);
+    }
+
+    private void updateVegetables() {
+        if (frameCount % difficultyCalculator(frameCount / 60) == 0) {
+            this.vegetables.add(new Vegetable(Game.SIZE));
+        }
+        this.vegetables.forEach(vegetable -> vegetable.update(this.tiles, this.trash));
+    }
+
+    private void updateTiles() {
+        this.tiles.forEach(Tile::update);
+    }
+
+    private void updateTrash() {
+        this.trash.forEach(object -> {
+            if (this.vegetables.contains(object))
+                this.vegetables.remove(object);
+        });
+        this.trash.clear();
+    }
+
+    private void render() {
+        this.vegetables.forEach(Vegetable::render);
+        this.tiles.forEach(Tile::render);
+    }
+
     public void run() {
         updateVegetables();
         updateTiles();
         updateTrash();
         render();
-    }
-    
-    public void updateVegetables() {
-        if (frameCount % 20 == 0) {
-            this.vegetables.add(new Vegetable(this.SIZE));
-        }
-        for (Vegetable vegetable : this.vegetables) {
-            vegetable.update(this.tiles, this.trash);
-        }
-    }
-    
-    public void updateTiles() {
-        for (Tile tile : this.tiles) {
-            tile.update();
-        }
-    }
-    
-    public void updateTrash() {
-        for (Object object : this.trash) {
-            if (this.vegetables.contains(object)) this.vegetables.remove(object);
-        }
-        this.trash.clear();
-    }
-    
-    public void render() {
-        for (Vegetable vegetable : this.vegetables) {
-            vegetable.render();
-        }
-        for (Tile tile : this.tiles) {
-            tile.render();
-        }
     }
 }
