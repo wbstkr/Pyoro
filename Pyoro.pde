@@ -1,7 +1,6 @@
 /*
 * TODO:
 * - vegetable are actually called beans
-* - beans can spawn at any x value
 * - tiles only respawn when a white bean is eaten
 * - - white beans do nearest tile
 * - - shiny beans do 10 nearest tiles
