@@ -1,12 +1,9 @@
 public class Bean extends GameObject {
-    public float size;
     public float radius;
-    public PVector position;
     
-    public Bean(float size) {
-        this.size = size;
+    public Bean(float size, float x, float y) {
+        super(size, x, y);
         this.radius = this.size / 2;
-        this.position = new PVector(random(this.radius, width - this.radius), this.radius * - 1);
     }
     
     public void update(ArrayList<Tile> tiles, ArrayList<GameObject> trash) {
@@ -16,7 +13,7 @@ public class Bean extends GameObject {
             trash.add(this);
         } else {
             for (Tile tile : tiles) {
-                if (!tile.destroyed && tile.column == (int) (map(this.position.x, 0, width, 0, width / this.size)) && this.position.y > (tile.y - this.radius) && this.position.y < (tile.y + tile.size + this.radius)) {
+                if (!tile.destroyed && this.position.x > tile.position.x && this.position.x < tile.position.x + tile.size) {
                     tile.destroy();
                     trash.add(this);
                     break;
@@ -25,7 +22,7 @@ public class Bean extends GameObject {
         }
     }
     
-    @Override
+    // TODO: does not render?
     public void render() {
         fill(0xFFFFFFFF);
         noStroke();
