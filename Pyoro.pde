@@ -1,7 +1,6 @@
 /*
 * TODO:
 * - https://n64squid.com/pyoro-64/
-* - vegetable are actually called beans
 * - tiles only respawn when a white bean is eaten
 * - - white beans do nearest tile
 * - - shiny beans do 10 nearest tiles
@@ -20,6 +19,6 @@ public void setup() {
 }
 
 public void draw() {
-    background(0);
+    background(0xFF000000);
     game.run();
 }

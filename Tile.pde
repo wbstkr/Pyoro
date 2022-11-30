@@ -1,9 +1,9 @@
 public class Tile extends GameObject {
-    private float size;
-    private int column;
-    private float y;
-    private int timer;
-    private boolean destroyed;
+    public float size;
+    public int column;
+    public float y;
+    public int timer;
+    public boolean destroyed;
     
     public Tile(float size, int column, float y) {
         this.size = size;
@@ -11,22 +11,6 @@ public class Tile extends GameObject {
         this.y = y;
         this.timer = 0;
         this.destroyed = false;
-    }
-    
-    public float getSize() {
-        return size;
-    }
-    
-    public int getColumn() {
-        return column;
-    }
-    
-    public float getY() {
-        return y;
-    }
-    
-    public boolean isDestroyed() {
-        return destroyed;
     }
     
     public void destroy() {

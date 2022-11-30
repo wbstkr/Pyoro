@@ -1,9 +1,9 @@
-public class Vegetable extends GameObject {
-    private float size;
-    private float radius;
-    private PVector position;
+public class Bean extends GameObject {
+    public float size;
+    public float radius;
+    public PVector position;
     
-    public Vegetable(float size) {
+    public Bean(float size) {
         this.size = size;
         this.radius = this.size / 2;
         this.position = new PVector(random(this.radius, width - this.radius), this.radius * - 1);
@@ -16,7 +16,7 @@ public class Vegetable extends GameObject {
             trash.add(this);
         } else {
             for (Tile tile : tiles) {
-                if (!tile.isDestroyed() && tile.getColumn() == (int) (map(this.position.x, 0, width, 0, width / this.size)) && this.position.y > (tile.getY() - this.radius) && this.position.y < (tile.getY() + tile.getSize() + this.radius)) {
+                if (!tile.destroyed && tile.column == (int) (map(this.position.x, 0, width, 0, width / this.size)) && this.position.y > (tile.y - this.radius) && this.position.y < (tile.y + tile.size + this.radius)) {
                     tile.destroy();
                     trash.add(this);
                     break;
