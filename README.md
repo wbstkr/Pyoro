@@ -4,7 +4,7 @@
 
 This is my attempt at recreating Pyoro, a game that originated from the WarioWare series.
 
-My gameplay logic will be largely based off of the findings found on Squid's blog[^1].
+My gameplay logic will be largely based off of the findings found on [Squid's blog](https://n64squid.com/homebrew/roms/pyoro-64/).
 
 
 ## Gameplay Logic
@@ -34,7 +34,7 @@ Points are based on how high sprout is when the player eat them.
 
 ## Acknowledgements
 
-[^1]: [Pyoro 64 - N64 Squid](https://n64squid.com/homebrew/roms/pyoro-64/)
-[^2]: [Pyoro (minigame) - Super Mario Wiki](https://www.mariowiki.com/Pyoro_(minigame))
-[^3]: [Pyoro 2 - Super Mario Wiki](https://www.mariowiki.com/Pyoro_2)
-[^4]: [Super Pyoro - Super Mario Wiki](https://www.mariowiki.com/Super_Pyoro)
+- [Pyoro 64 - N64 Squid](https://n64squid.com/homebrew/roms/pyoro-64/)
+- [Pyoro (minigame) - Super Mario Wiki](https://www.mariowiki.com/Pyoro_(minigame))
+- [Pyoro 2 - Super Mario Wiki](https://www.mariowiki.com/Pyoro_2)
+- [Super Pyoro - Super Mario Wiki](https://www.mariowiki.com/Super_Pyoro)
