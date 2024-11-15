@@ -24,7 +24,7 @@ public class Bean extends GameObject {
 
   // TODO: does not render?
   public void render() {
-    fill(0xFFFFFFFF);
+    fill(255);
     noStroke();
     circle(this.position.x, this.position.y, this.size);
   }

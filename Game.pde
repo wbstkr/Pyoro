@@ -8,7 +8,7 @@ public class Game {
     this.trash = new ArrayList<>();
     this.beans = new ArrayList<>();
     this.tiles = new ArrayList<>();
-    for (int i = 0; i < (int)(width / Game.SIZE); i++) {
+    for (int i = 0; i < (int) (width / Game.SIZE); i++) {
       this.tiles.add(new Tile(Game.SIZE, i * Game.SIZE, height - Game.SIZE));
     }
   }
@@ -19,13 +19,13 @@ public class Game {
 
   public void updateBeans() {
     if (frameCount % difficultyCalculator(frameCount / 60) == 0) {
-      this.beans.add(new Bean(Game.SIZE, random(Game.SIZE / 2, width - Game.SIZE / 2), Game.SIZE / - 2));
+      this.beans.add(new Bean(Game.SIZE, random(Game.SIZE / 2, width - Game.SIZE / 2), Game.SIZE / -2));
     }
     this.beans.forEach(bean -> bean.update(this.tiles, this.trash));
   }
 
   public void updateTiles() {
-    this.tiles.forEach(Tile ::  update);
+    this.tiles.forEach(Tile :: update);
   }
 
   public void updateTrash() {
@@ -47,5 +47,8 @@ public class Game {
     updateTiles();
     updateTrash();
     render();
+    for(Bean bean : this.beans) {
+      println(bean.position.x + ", " + bean.position.y);
+    }
   }
 }
