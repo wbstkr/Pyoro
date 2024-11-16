@@ -19,7 +19,7 @@ The player moves along a row of tiles at the bottom of the screen. Sprouts of di
 
 **White Sprout**: Eating this type of sprout respawns the nearest destroyed tile. It appears to have a 20% chance of spawning.
 
-**Rainbow Sprout**: Eating this type of sprout respawns the nearest 10 destroyed tiles and destroys all other sprouts on screen at the time of eating it for 50 points each. It appears to have a 10% chance of spawning, but only after the player achieves 5,000 points.
+**Rainbow Sprout**: Eating this type of sprout respawns the nearest 10 destroyed tiles and destroys all other sprouts on screen at the time of eating it for 50 points each. It appears to have a 10% chance of spawning, but only after the player achieves 5,000 points. They also fall slower than the other two types of sprouts.
 
 ### Point System
 
