@@ -2,6 +2,7 @@ public class Game {
   public ArrayList<GameObject> trash;
   public ArrayList<Sprout> sprouts;
   public ArrayList<Tile> tiles;
+  public ArrayList<Tile> replenishQueue;
   public Player player;
 
   public static final float SIZE = 30;
@@ -10,6 +11,8 @@ public class Game {
     this.trash = new ArrayList<>();
     this.sprouts = new ArrayList<>();
     this.tiles = new ArrayList<>();
+    this.replenishQueue = new ArrayList<>();
+
     this.player = new Player(Game.SIZE, (width - Game.SIZE) / 2.0, height - (Game.SIZE * 2.0));
 
     for (int i = 0; i < (int) (width / Game.SIZE); i++) {
@@ -22,7 +25,7 @@ public class Game {
   }
 
   public void updatePlayer() {
-    this.player.update();
+    this.player.update(this.sprouts, this.tiles, this.trash);
   }
 
   public void updateSprouts() {
@@ -43,6 +46,10 @@ public class Game {
     }
     );
     this.trash.clear();
+  }
+
+  public void updateReplenishQueue() {
+    
   }
 
   public void render() {
