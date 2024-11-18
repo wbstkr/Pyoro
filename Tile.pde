@@ -10,10 +10,6 @@ public class Tile extends GameObject {
     this.destroyed = true;
   }
 
-  public boolean xPositionInColumn(float x) {
-    return x >= this.position.x && x <= this.position.x + this.size;
-  }
-
   public void update() {
   }
 

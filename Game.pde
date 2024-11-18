@@ -13,10 +13,14 @@ public class Game {
     this.tiles = new ArrayList<>();
     this.replenishQueue = new ArrayList<>();
 
-    this.player = new Player(Game.SIZE, (width - Game.SIZE) / 2.0, height - (Game.SIZE * 2.0));
+    float playerX = (width - Game.SIZE) / 2.0;
+    float playerY = height - (Game.SIZE * 2.0);
+    this.player = new Player(Game.SIZE, playerX, playerY);
 
     for (int i = 0; i < (int) (width / Game.SIZE); i++) {
-      this.tiles.add(new Tile(Game.SIZE, i * Game.SIZE, height - Game.SIZE));
+      float tileX = i * Game.SIZE;
+      float tileY = height - Game.SIZE;
+      this.tiles.add(new Tile(Game.SIZE, tileX, tileY));
     }
   }
 
@@ -30,32 +34,42 @@ public class Game {
 
   public void updateSprouts() {
     if (frameCount % 120 == 0) {
-      this.sprouts.add(new Sprout(Game.SIZE, (floor(random(width / Game.SIZE)) * Game.SIZE) + (Game.SIZE / 2.0), Game.SIZE / -2.0));
+      float sproutX = (floor(random(width / Game.SIZE)) * Game.SIZE) + (Game.SIZE / 2.0);
+      float sproutY = Game.SIZE / -2.0;
+      this.sprouts.add(new Sprout(Game.SIZE, sproutX, sproutY));
     }
-    this.sprouts.forEach(sprout -> sprout.update(this.tiles, this.trash));
+    for (Sprout sprout : this.sprouts) {
+      sprout.update(this.tiles, this.trash);
+    }
   }
 
   public void updateTiles() {
-    this.tiles.forEach(Tile :: update);
+    for (Tile tile : this.tiles) {
+      tile.update();
+    }
   }
 
   public void updateTrash() {
-    this.trash.forEach(object -> {
-      if (this.sprouts.contains(object))
-      this.sprouts.remove(object);
+    for (GameObject object : this.trash) {
+      if (this.sprouts.contains(object)) {
+        this.sprouts.remove(object);
+      }
     }
-    );
     this.trash.clear();
   }
 
   public void updateReplenishQueue() {
-    
+    // TODO
   }
 
   public void render() {
-    this.tiles.forEach(Tile :: render);
+    for (Tile tile : this.tiles) {
+      tile.render();
+    }
+    for (Sprout sprout : this.sprouts) {
+      sprout.render();
+    }
     this.player.render();
-    this.sprouts.forEach(Sprout :: render);
   }
 
   public void run() {

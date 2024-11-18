@@ -1,5 +1,6 @@
 public class Sprout extends GameObject {
   public float radius;
+  public String type; // TODO
 
   public Sprout(float size, float x, float y) {
     super(size, x, y);
@@ -26,7 +27,7 @@ public class Sprout extends GameObject {
     ArrayList<Tile> tilesInColumn = new ArrayList<>();
     Tile foundTile = null;
     for (Tile tile : tiles) {
-      if (tile.xPositionInColumn(this.position.x)) {
+      if (numBetween(this.position.x, tile.position.x, tile.size)) {
         tilesInColumn.add(tile);
       }
     }

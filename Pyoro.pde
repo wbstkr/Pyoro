@@ -21,6 +21,11 @@ public void updateController() {
   }
 }
 
+public boolean numBetween(float num, float begin, float range) {
+  float difference = num - begin;
+  return difference >= 0 && difference <= range;
+}
+
 public HashMap<Object, Integer> controller;
 
 public void keyPressed() {
@@ -50,9 +55,7 @@ public void keyReleased() {
 public int getInput(Object... keyInputs) {
   int output = -1;
   for (Object keyInput : keyInputs) {
-    if (this.controller.getOrDefault(keyInput, -1) > output) {
-      output = this.controller.getOrDefault(keyInput, -1);
-    }
+    output = max(output, this.controller.getOrDefault(keyInput, -1));
   }
   return output;
 }

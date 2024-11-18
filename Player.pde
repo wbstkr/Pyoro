@@ -12,16 +12,12 @@ public class Player extends GameObject {
     this.hurt = 0;
   }
 
-  public boolean xPositionInColumn(float x) {
-    return x > this.position.x && x < this.position.x + this.size;
-  }
-
   public Tile tileAt(ArrayList<Tile> tiles, float x, float y) {
     for (Tile tile : tiles) {
-      if (tile.xPositionInColumn(x)) {
-        if ( y >= tile.position.y && y <= tile.position.y + tile.size) {
-          return tile;
-        }
+      boolean intersectX = numBetween(x, tile.position.x, tile.size);
+      boolean intersectY = numBetween(y, tile.position.y, tile.size);
+      if (intersectX && intersectY) {
+        return tile;
       }
     }
     return null;
@@ -53,7 +49,9 @@ public class Player extends GameObject {
       this.retracting = false;
       if (getInput(LEFT, 'a') > -1) {
         this.facingRight = false;
-        Tile tile = this.tileAt(tiles, this.position.x - 1, this.position.y + this.size + 1);
+        float checkX = this.position.x - 1;
+        float checkY = this.position.y + this.size + 1;
+        Tile tile = this.tileAt(tiles, checkX, checkY);
         if (tile != null) {
           if (!tile.destroyed) {
             this.position.x -= 5;
@@ -62,7 +60,9 @@ public class Player extends GameObject {
       }
       if (getInput(RIGHT, 'd') > -1) {
         this.facingRight = true;
-        Tile tile = this.tileAt(tiles, this.position.x + this.size + 1, this.position.y + this.size + 1);
+        float checkX = this.position.x + this.size + 1;
+        float checkY = this.position.y + this.size + 1;
+        Tile tile = this.tileAt(tiles, checkX, checkY);
         if (tile != null) {
           if (!tile.destroyed) {
             this.position.x += 5;
@@ -72,7 +72,7 @@ public class Player extends GameObject {
     }
 
     for (Sprout sprout : sprouts) {
-      if (this.xPositionInColumn(sprout.position.x)) {
+      if (numBetween(sprout.position.x, this.position.x, this.size)) {
         if (sprout.position.y > this.position.y) {
           trash.add(sprout);
           this.hurt = 120;
