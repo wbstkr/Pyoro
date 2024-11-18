@@ -103,6 +103,6 @@ public class Player extends GameObject {
     PVector tonguePosition = this.getTonguePosition();
     strokeWeight(4);
     stroke(125);
-    line(this.position.x + (this.size / 2.0), this.position.y + (this.size / 2.0), tonguePosition.x, tonguePosition.y);
+    line(this.position.x + this.radius, this.position.y + this.radius, tonguePosition.x, tonguePosition.y);
   }
 }

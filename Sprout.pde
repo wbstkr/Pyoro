@@ -1,10 +1,12 @@
+public enum SproutTypes {
+  GREEN, WHITE, RAINBOW
+}
+
 public class Sprout extends GameObject {
-  public float radius;
-  public String type; // TODO
+  public SproutTypes type; // TODO
 
   public Sprout(float size, float x, float y) {
     super(size, x, y);
-    this.radius = this.size / 2;
   }
 
   public void update(ArrayList<Tile> tiles, ArrayList<GameObject> trash) {
