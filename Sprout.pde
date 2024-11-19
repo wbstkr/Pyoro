@@ -1,12 +1,21 @@
 public enum SproutTypes {
-  GREEN, WHITE, RAINBOW
+  GREEN, WHITE, RAINBOW;
 }
 
 public class Sprout extends GameObject {
-  public SproutTypes type; // TODO
+  public SproutTypes type;
 
   public Sprout(float size, float x, float y) {
     super(size, x, y);
+
+    float typeChance = random(1);
+    if (typeChance < 0.1) {
+      this.type = SproutTypes.RAINBOW;
+    } else if (typeChance < 0.3) {
+      this.type = SproutTypes.WHITE;
+    } else {
+      this.type = SproutTypes.GREEN;
+    }
   }
 
   public void update(ArrayList<Tile> tiles, ArrayList<GameObject> trash) {
@@ -47,8 +56,24 @@ public class Sprout extends GameObject {
 
   public void render() {
     strokeWeight(2);
-    fill(255);
     stroke(125);
+
+    switch(this.type) {
+    case RAINBOW:
+      color[] colors = {
+        color(255, 0, 0),
+        color(0, 255, 0),
+        color(0, 0, 255)
+      };
+      fill(colors[(frameCount / 10) % 3]);
+      break;
+    case WHITE:
+      fill(255);
+      break;
+    default:
+      fill(0, 255, 0);
+    }
+
     circle(this.position.x, this.position.y, this.size);
   }
 }

@@ -29,7 +29,7 @@ public class Game {
   }
 
   public void updatePlayer() {
-    this.player.update(this.sprouts, this.tiles, this.trash);
+    this.player.update(this.sprouts, this.tiles, this.trash, this.replenishQueue);
   }
 
   public void updateSprouts() {

@@ -13,14 +13,6 @@ public void draw() {
   game.run();
 }
 
-public void updateController() {
-  for (Object keyInput : this.controller.keySet()) {
-    if (this.controller.get(keyInput) != -1) {
-      this.controller.put(keyInput, this.controller.get(keyInput) + 1);
-    }
-  }
-}
-
 public boolean numBetween(float num, float begin, float range) {
   float difference = num - begin;
   return difference >= 0 && difference <= range;
@@ -49,6 +41,14 @@ public void keyReleased() {
   }
   if (this.controller.getOrDefault(keyInput, -1) != -1) {
     this.controller.put(keyInput, -1);
+  }
+}
+
+public void updateController() {
+  for (Object keyInput : this.controller.keySet()) {
+    if (this.controller.get(keyInput) != -1) {
+      this.controller.put(keyInput, this.controller.get(keyInput) + 1);
+    }
   }
 }
 

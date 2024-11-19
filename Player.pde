@@ -1,8 +1,14 @@
+public enum PlayerControls {
+  LEFT, RIGHT, JUMP, TONGUE;
+}
+
 public class Player extends GameObject {
   public float tongue;
   public boolean facingRight;
   public boolean retracting;
   public int hurt;
+
+  public HashMap<PlayerControls, Object[]> playerControls; // TODO: better controls
 
   public Player(float size, float x, float y) {
     super(size, x, y);
@@ -31,7 +37,7 @@ public class Player extends GameObject {
     }
   }
 
-  public void update(ArrayList<Sprout> sprouts, ArrayList<Tile> tiles, ArrayList<GameObject> trash) {
+  public void update(ArrayList<Sprout> sprouts, ArrayList<Tile> tiles, ArrayList<GameObject> trash, ArrayList<Tile> replenishQueue) {
     int maxTongueSize;
     if (this.facingRight) {
       maxTongueSize = int(min(width - (this.position.x + this.size), this.position.y));
