@@ -74,26 +74,7 @@ public class Player extends GameObject {
     }
   }
 
-  private void addNearestDestroyedTile(ArrayList<Tile> tiles, ArrayList<Tile> replenishQueue, int count) {
-    for (int j = 0; j < count; j++) {
-      Tile nearestDestroyedTile = null;
-      float closestDistance = width;
-      for (Tile tile : tiles) {
-        if (tile.destroyed && !replenishQueue.contains(tile) && abs(this.position.x - tile.position.x) < closestDistance) {
-          nearestDestroyedTile = tile;
-          closestDistance = abs(this.position.x - tile.position.x);
-        }
-      }
-      if (nearestDestroyedTile != null) {
-        replenishQueue.add(nearestDestroyedTile);
-      }
-    }
-  }
-
-  public void update(ArrayList<Sprout> sprouts, ArrayList<Tile> tiles, ArrayList<GameObject> trash, ArrayList<Tile> replenishQueue) {
-    this.tongueLogic();
-    this.movementLogic(tiles);
-
+  public void eatLogic(ArrayList<Sprout> sprouts, ArrayList<Tile> tiles, ArrayList<GameObject> trash, ArrayList<Tile> replenishQueue) {
     for (Sprout sprout : sprouts) {
       if (numBetween(sprout.position.x, this.position.x, this.size) && sprout.position.y > this.position.y) {
         trash.add(sprout);
@@ -117,6 +98,28 @@ public class Player extends GameObject {
         }
       }
     }
+  }
+
+  private void addNearestDestroyedTile(ArrayList<Tile> tiles, ArrayList<Tile> replenishQueue, int count) {
+    for (int j = 0; j < count; j++) {
+      Tile nearestDestroyedTile = null;
+      float closestDistance = width;
+      for (Tile tile : tiles) {
+        if (tile.destroyed && !replenishQueue.contains(tile) && abs(this.position.x - tile.position.x) < closestDistance) {
+          nearestDestroyedTile = tile;
+          closestDistance = abs(this.position.x - tile.position.x);
+        }
+      }
+      if (nearestDestroyedTile != null) {
+        replenishQueue.add(nearestDestroyedTile);
+      }
+    }
+  }
+
+  public void update(ArrayList<Sprout> sprouts, ArrayList<Tile> tiles, ArrayList<GameObject> trash, ArrayList<Tile> replenishQueue) {
+    this.tongueLogic();
+    this.movementLogic(tiles);
+    this.eatLogic(sprouts, tiles, trash, replenishQueue);
 
     if (this.hurt > 0) {
       this.hurt--;
