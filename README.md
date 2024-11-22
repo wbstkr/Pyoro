@@ -34,6 +34,8 @@ Points are based on how high sprout is when the player eat them.
 
 ## Feature Checklist
 
+### Pyoro 1
+
 - [x] add tiles
 - [x] add sprouts
 - [x] add player
@@ -52,8 +54,16 @@ Points are based on how high sprout is when the player eat them.
 - [ ] add sound settings
 - [ ] add configurable controls
 - [ ] add configurable screen size
+
+### Pyoro 2
+
 - [ ] add pyoro 2
+- [ ] replace tongue with blowing
+- [ ] replace scoring system with combo system
 - [ ] add 2 player mode
+
+### Pyoro 3
+
 - [ ] add rings
 - [ ] add customizable level layout
 - [ ] add levels
