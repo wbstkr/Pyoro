@@ -59,7 +59,36 @@ public class Game {
   }
 
   public void updateReplenishQueue() {
-    // TODO
+    ArrayList<Tile> replenishTrash = new ArrayList<>();
+    for (int i = 0; i < this.replenishQueue.size(); i++) {
+      Tile previousTile = null;
+      Tile tile = this.replenishQueue.get(i);
+      if (i > 0) {
+        previousTile = this.replenishQueue.get(i - 1);
+        if (previousTile.replenishingTimer > 10) {
+          tile.replenishingTimer++;
+        }
+      } else {
+        tile.replenishingTimer++;
+      }
+      if (tile.replenishingTimer == 0) {
+        tile.position.y = -tile.size;
+      }
+      if (tile.replenishingTimer > -1) {
+        tile.position.y += 10;
+      }
+      if (tile.position.y > tile.targetPosition.y) {
+        tile.position = tile.targetPosition.copy();
+        tile.replenishingTimer = -1;
+        tile.destroyed = false;
+        replenishTrash.add(tile);
+      }
+    }
+    for (Tile tile : replenishTrash) {
+      if (!tile.destroyed) {
+        this.replenishQueue.remove(tile);
+      }
+    }
   }
 
   public void render() {
@@ -76,6 +105,7 @@ public class Game {
     updatePlayer();
     updateSprouts();
     updateTiles();
+    updateReplenishQueue();
     updateTrash();
     render();
   }

@@ -1,14 +1,8 @@
-public enum PlayerControls {
-  LEFT, RIGHT, JUMP, TONGUE;
-}
-
 public class Player extends GameObject {
   public float tongue;
   public boolean facingRight;
   public boolean retracting;
   public int hurt;
-
-  public HashMap<PlayerControls, Object[]> playerControls; // TODO: better controls
 
   public Player(float size, float x, float y) {
     super(size, x, y);
@@ -37,7 +31,7 @@ public class Player extends GameObject {
     }
   }
 
-  public void update(ArrayList<Sprout> sprouts, ArrayList<Tile> tiles, ArrayList<GameObject> trash, ArrayList<Tile> replenishQueue) {
+  public void tongueLogic() {
     int maxTongueSize;
     if (this.facingRight) {
       maxTongueSize = int(min(width - (this.position.x + this.size), this.position.y));
@@ -50,7 +44,9 @@ public class Player extends GameObject {
       this.retracting = true;
       this.tongue = max(this.tongue - 20, 0);
     }
+  }
 
+  public void movementLogic(ArrayList<Tile> tiles) {
     if (this.tongue == 0) {
       this.retracting = false;
       if (getInput(LEFT, 'a') > -1) {
@@ -76,6 +72,11 @@ public class Player extends GameObject {
         }
       }
     }
+  }
+
+  public void update(ArrayList<Sprout> sprouts, ArrayList<Tile> tiles, ArrayList<GameObject> trash, ArrayList<Tile> replenishQueue) {
+    this.tongueLogic();
+    this.movementLogic(tiles);
 
     for (Sprout sprout : sprouts) {
       if (numBetween(sprout.position.x, this.position.x, this.size)) {
@@ -86,6 +87,35 @@ public class Player extends GameObject {
       }
       if (this.tongue > 0 && !this.retracting) {
         if (this.getTonguePosition().dist(sprout.position) < sprout.size) {
+          if (sprout.type == SproutTypes.WHITE) {
+            Tile nearestDestroyedTile = null;
+            float closestDistance = width;
+            for (Tile tile : tiles) {
+              if (tile.destroyed && !replenishQueue.contains(tile)) {
+                if (abs(this.position.x - tile.position.x) < closestDistance) {
+                  nearestDestroyedTile = tile;
+                }
+              }
+            }
+            if (nearestDestroyedTile != null) {
+              replenishQueue.add(nearestDestroyedTile);
+            }
+          } else if (sprout.type == SproutTypes.RAINBOW) {
+            for (int i = 0; i < 10; i++) {
+              Tile nearestDestroyedTile = null;
+              float closestDistance = width;
+              for (Tile tile : tiles) {
+                if (tile.destroyed && !replenishQueue.contains(tile)) {
+                  if (abs(this.position.x - tile.position.x) < closestDistance) {
+                    nearestDestroyedTile = tile;
+                  }
+                }
+              }
+              if (nearestDestroyedTile != null) {
+                replenishQueue.add(nearestDestroyedTile);
+              }
+            }
+          }
           trash.add(sprout);
           this.retracting = true;
         }
