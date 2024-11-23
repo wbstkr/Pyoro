@@ -42,8 +42,8 @@ Points are based on how high sprout is when the player eat them.
 - [x] add tile destruction
 - [x] add ability to eat sprouts
 - [x] add tile replenishing
-- [ ] add scoring
-- [ ] add difficulty scaling
+- [x] add scoring
+- [x] add difficulty scaling
 - [ ] add life system
 - [ ] add pausing
 - [ ] add sprites

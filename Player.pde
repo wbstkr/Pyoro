@@ -31,6 +31,33 @@ public class Player extends GameObject {
     }
   }
 
+  private void addNearestDestroyedTile(ArrayList<Tile> tiles, ArrayList<Tile> replenishQueue, int count) {
+    for (int j = 0; j < count; j++) {
+      Tile nearestDestroyedTile = null;
+      float closestDistance = width;
+      for (Tile tile : tiles) {
+        if (tile.destroyed && !replenishQueue.contains(tile) && abs(this.position.x - tile.position.x) < closestDistance) {
+          nearestDestroyedTile = tile;
+          closestDistance = abs(this.position.x - tile.position.x);
+        }
+      }
+      if (nearestDestroyedTile != null) {
+        replenishQueue.add(nearestDestroyedTile);
+      }
+    }
+  }
+
+  public int update(ArrayList<Sprout> sprouts, ArrayList<Tile> tiles, ArrayList<GameObject> trash, ArrayList<Tile> replenishQueue) {
+    this.tongueLogic();
+    this.movementLogic(tiles);
+    int scoreModifier = this.eatLogic(sprouts, tiles, trash, replenishQueue);
+
+    if (this.hurt > 0) {
+      this.hurt--;
+    }
+    return scoreModifier;
+  }
+
   public void tongueLogic() {
     int maxTongueSize;
     if (this.facingRight) {
@@ -74,7 +101,9 @@ public class Player extends GameObject {
     }
   }
 
-  public void eatLogic(ArrayList<Sprout> sprouts, ArrayList<Tile> tiles, ArrayList<GameObject> trash, ArrayList<Tile> replenishQueue) {
+  public int eatLogic(ArrayList<Sprout> sprouts, ArrayList<Tile> tiles, ArrayList<GameObject> trash, ArrayList<Tile> replenishQueue) {
+    int scoreModifier = 0;
+    boolean rainbowEaten = false;
     for (Sprout sprout : sprouts) {
       if (numBetween(sprout.position.x, this.position.x, this.size) && sprout.position.y > this.position.y) {
         trash.add(sprout);
@@ -83,12 +112,25 @@ public class Player extends GameObject {
 
       if (this.tongue > 0 && !this.retracting) {
         if (this.getTonguePosition().dist(sprout.position) < sprout.size) {
+          if (sprout.position.y <= sprout.size) {
+            scoreModifier += 1000;
+          } else if (sprout.position.y <= sprout.size * 3) {
+            scoreModifier += 500;
+          } else if (sprout.position.y <= height / 2.0) {
+            scoreModifier += 100;
+          } else if (sprout.position.y <= this.position.y - (sprout.size * 2)) {
+            scoreModifier += 50;
+          } else {
+            scoreModifier += 10;
+          }
+
           switch (sprout.type) {
           case WHITE:
             addNearestDestroyedTile(tiles, replenishQueue, 1);
             break;
           case RAINBOW:
             addNearestDestroyedTile(tiles, replenishQueue, 10);
+            rainbowEaten = true;
             break;
           default:
             break;
@@ -98,32 +140,15 @@ public class Player extends GameObject {
         }
       }
     }
-  }
-
-  private void addNearestDestroyedTile(ArrayList<Tile> tiles, ArrayList<Tile> replenishQueue, int count) {
-    for (int j = 0; j < count; j++) {
-      Tile nearestDestroyedTile = null;
-      float closestDistance = width;
-      for (Tile tile : tiles) {
-        if (tile.destroyed && !replenishQueue.contains(tile) && abs(this.position.x - tile.position.x) < closestDistance) {
-          nearestDestroyedTile = tile;
-          closestDistance = abs(this.position.x - tile.position.x);
+    if (rainbowEaten) {
+      for (Sprout sprout : sprouts) {
+        if (!trash.contains(sprout)) {
+          trash.add(sprout);
+          scoreModifier += 50;
         }
       }
-      if (nearestDestroyedTile != null) {
-        replenishQueue.add(nearestDestroyedTile);
-      }
     }
-  }
-
-  public void update(ArrayList<Sprout> sprouts, ArrayList<Tile> tiles, ArrayList<GameObject> trash, ArrayList<Tile> replenishQueue) {
-    this.tongueLogic();
-    this.movementLogic(tiles);
-    this.eatLogic(sprouts, tiles, trash, replenishQueue);
-
-    if (this.hurt > 0) {
-      this.hurt--;
-    }
+    return scoreModifier;
   }
 
   public void render() {

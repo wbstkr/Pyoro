@@ -5,11 +5,11 @@ public enum SproutTypes {
 public class Sprout extends GameObject {
   public SproutTypes type;
 
-  public Sprout(float size, float x, float y) {
+  public Sprout(float size, float x, float y, int score) {
     super(size, x, y);
 
     float typeChance = random(1);
-    if (typeChance < 0.1) {
+    if (typeChance < 0.1 && score > 5000) {
       this.type = SproutTypes.RAINBOW;
     } else if (typeChance < 0.3) {
       this.type = SproutTypes.WHITE;
@@ -19,7 +19,7 @@ public class Sprout extends GameObject {
   }
 
   public void update(ArrayList<Tile> tiles, ArrayList<GameObject> trash) {
-    this.position.add(0, 5);
+    this.position.y += 5;
 
     if (this.position.y > height + this.radius) {
       trash.add(this);

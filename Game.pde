@@ -4,6 +4,7 @@ public class Game {
   public ArrayList<Tile> tiles;
   public ArrayList<Tile> replenishQueue;
   public Player player;
+  public int score;
 
   public static final float SIZE = 30;
 
@@ -17,6 +18,8 @@ public class Game {
     float playerY = height - (Game.SIZE * 2.0);
     this.player = new Player(Game.SIZE, playerX, playerY);
 
+    this.score = 0;
+
     for (int i = 0; i < (int) (width / Game.SIZE); i++) {
       float tileX = i * Game.SIZE;
       float tileY = height - Game.SIZE;
@@ -24,19 +27,20 @@ public class Game {
     }
   }
 
-  public int difficultyCalculator(int frame) {
-    return (int) (Math.pow(5d, (frame / - 100d) + 3d) + 20d);
+  public int difficultyCalculator() {
+    return (int) (max(20, map(this.score, 0, 5000, 120, 20)));
   }
 
   public void updatePlayer() {
-    this.player.update(this.sprouts, this.tiles, this.trash, this.replenishQueue);
+    int scoreModifier = this.player.update(this.sprouts, this.tiles, this.trash, this.replenishQueue);
+    this.score += scoreModifier;
   }
 
   public void updateSprouts() {
-    if (frameCount % 120 == 0) {
+    if (frameCount % difficultyCalculator() == 0) {
       float sproutX = (floor(random(width / Game.SIZE)) * Game.SIZE) + (Game.SIZE / 2.0);
       float sproutY = Game.SIZE / -2.0;
-      this.sprouts.add(new Sprout(Game.SIZE, sproutX, sproutY));
+      this.sprouts.add(new Sprout(Game.SIZE, sproutX, sproutY, this.score));
     }
     for (Sprout sprout : this.sprouts) {
       sprout.update(this.tiles, this.trash);
@@ -82,6 +86,13 @@ public class Game {
     }
   }
 
+  public void renderScore() {
+    textSize(60);
+    textAlign(LEFT, TOP);
+    fill(255);
+    text(this.score, 0, 0);
+  }
+
   public void render() {
     for (Tile tile : this.tiles) {
       tile.render();
@@ -90,6 +101,7 @@ public class Game {
       sprout.render();
     }
     this.player.render();
+    this.renderScore();
   }
 
   public void run() {
