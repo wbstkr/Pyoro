@@ -78,3 +78,4 @@ Points are based on how high sprout is when the player eat them.
 - [Pyoro (minigame) - Super Mario Wiki](https://www.mariowiki.com/Pyoro_(minigame))
 - [Pyoro 2 - Super Mario Wiki](https://www.mariowiki.com/Pyoro_2)
 - [Super Pyoro - Super Mario Wiki](https://www.mariowiki.com/Super_Pyoro)
+- [The History of Pyoro from WarioWare and His Minigames - YouTube](https://youtu.be/qlfjt4uRZI8)
