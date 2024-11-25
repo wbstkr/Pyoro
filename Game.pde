@@ -1,14 +1,3 @@
-public enum GameStates {
-  MAIN_MENU,
-    SETTINGS,
-    PYORO1_READY,
-    PYORO1_PLAY,
-    PYORO1_GAME_OVER,
-    PYORO2,
-    PYORO3,
-    PAUSE
-}
-
 public class Game {
   public ArrayList<GameObject> trash;
   public ArrayList<Sprout> sprouts;
